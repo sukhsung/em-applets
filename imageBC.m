@@ -21,7 +21,7 @@ function varargout = imageBC(im)
     end
     
     % 16 bit gray colormap as default
-    colormap(gray(65536))
+    colormap(parula(65536))
     % Find default min, max
     cmin = min(im(:));
     cmax = max(im(:)); 

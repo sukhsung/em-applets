@@ -25,9 +25,9 @@ function liveFilter(im)
     ax3 = subplot(2,2,[2 4]);
     im3_obj = imagesc(im);
     axis(ax3,'equal','off');
-    colormap(ax1,gray(65536));
-    colormap(ax2,gray(65536));
-    colormap(ax3,gray(65536));
+    colormap(ax1,parula(65536));
+    colormap(ax2,parula(65536));
+    colormap(ax3,parula(65536));
     
     im_objs = [im1_obj,im2_obj,im3_obj];
     

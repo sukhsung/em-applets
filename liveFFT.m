@@ -12,9 +12,11 @@ function liveFFT(im)
     ax1 = subplot(1,2,1);
     imagesc(im);
     axis(ax1,'equal','off');
+    colormap(parula(65536))
     ax2 = subplot(1,2,2);
     im_obj = imagesc(im_fft);
     axis(ax2,'equal','off');
+    colormap(parula(65536))
     
     ax1.Position=[0.1 0  0.4 1];
     ax2.Position=[0.5  0 0.4 1];

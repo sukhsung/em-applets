@@ -9,6 +9,7 @@ function sliceZ(data)
     im_h = imagesc(data(:,:,1),[cmin, cmax]);
     ax = gca;
     axis(ax,'image')
+    colormap(parula(65536));
     %%% UIs
     % ui panels
     p1 = uipanel(f,'Position',[0,0,0.1,1]);
