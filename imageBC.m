@@ -12,6 +12,7 @@ function varargout = imageBC(im)
     f = figure;
     im_h = imagesc(im);
     ax = gca;
+    axis image;
     
     % Return figure, axis, imagesc handles
     if nargout >0 
