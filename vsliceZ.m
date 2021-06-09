@@ -1,4 +1,26 @@
 function vsliceZ(varargin)
+% view tiff stack on a fly without loading the whole stack to memory
+% useful for viewing large stack
+% Arguments:
+%     Mode 1: vsliceZ( )
+%             Opens dialog to select tiff stack to open
+%
+%     Mode 2: vsliceZ( path_to_tiffstack )
+%             Opens specified tiff stack
+%
+%     Mode 3: vsliceZ( function_handle )
+%             Opens dialog to select tiff stack to open (same as Mode 1)
+%               and apply a post processing function
+%               e.g.  vsliceZ( @(x) log(1+abs(x)) )or
+%               f = @(x) log(1+abs(x); vsliceZ( f )
+%
+%     Mode 4: vsliceZ( path_to_tiffstack, function_handle )
+%             Opens specified tiff stack (same as Mode 2)
+%               and apply a post processing function
+%
+% Written by Suk Hyun Sung (sukhsung@umich.edu) 
+% Last Modified 2021/06/09
+
     if nargin == 0
         [fname,path] = uigetfile('*.tif');
         fname = fullfile(path,fname);
