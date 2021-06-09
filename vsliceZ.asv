@@ -1,29 +1,19 @@
-function vsliceZ(varargin)
+function vsliceZ(varargin, applyfun)
     if nargin == 0
         [fname,path] = uigetfile('*.tif');
         fname = fullfile(path,fname);
-        applyfun = @(x) x;
     elseif nargin == 1
         if isa( varargin{1}, 'function_handle' )
             [fname,path] = uigetfile('*.tif');
             fname = fullfile(path,fname);
             applyfun = varargin{1};
-        else
-            fname = varargin{1};
-            applyfun = @(x) x;
-        end
-    elseif nargin == 2
-        fname = varargin{1};
-        applyfun = varargin{2};
-    else
-        error( 'Unsupported Number of Arguments' );
-    end
+            
             
     im_info = imfinfo(fname);
     nz = length(im_info);
     tiffObj = Tiff(fname,'r');
 
-    im = applyfun( tiffObj.read );
+    im = tiffObj.read;
     cmin = min(im(:));
     cmax = max(im(:));
 
@@ -31,7 +21,7 @@ function vsliceZ(varargin)
         cmax = 65536;
     end
     f = figure;
-    im_h = imagesc( im ,[cmin, cmax]);
+    im_h = imagesc(im,[cmin, cmax]);
     ax = gca;
     axis(ax,'image')
     colormap(parula(65536));
@@ -52,14 +42,14 @@ function vsliceZ(varargin)
     
     % Listen to slider values and change B & C
     addlistener([slmin, slmax,slz], 'Value', 'PostSet',...
-        @(hObject,eventdata) update(ax,im_h,tiffObj,nz,slmin,slmax,slz,applyfun));
+        @(hObject,eventdata) update(ax,im_h,tiffObj,nz,slmin,slmax,slz));
     addlistener(f, 'ObjectBeingDestroyed', @(~,~) close(tiffObj));
-    update(ax,im_h,tiffObj,nz,slmin,slmax,slz,applyfun)
+    update(ax,im_h,tiffObj,nz,slmin,slmax,slz)
 end
 
-function update(ax,im_h,tiffObj,nz,slmin,slmax,slz,applyfun)
+function update(ax,im_h,tiffObj,nz,slmin,slmax,slz)
     zslice = round(slz.Value);
-    setSlice(im_h,zslice,tiffObj,slmax,slmin,applyfun)
+    setSlice(im_h,zslice,tiffObj,slmax,slmin)
     cmin = slmin.Value;
     cmax = slmax.Value;
     
@@ -71,10 +61,10 @@ function setTitle(ax,cmin,cmax,zslice,nz)
     title(ax,sprintf('%d/%d slice, \n min = %f, max = %f', zslice,nz, cmin, cmax));
 end
 
-function setSlice(im_h,zslice,tiffObj,slmax,slmin,applyfun)
+function setSlice(im_h,zslice,tiffObj,slmax,slmin)
     tiffObj.setDirectory(zslice);
     % Select image from image stack  by slider values
-    im_h.CData = applyfun( tiffObj.read );
+    im_h.CData = tiffObj.read;
 end
 
 function setContrast(ax,cmin, cmax)
