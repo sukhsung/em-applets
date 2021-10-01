@@ -31,7 +31,7 @@ function writeDM4SeriesToTiff(source_dir, save_dir, dataname, binXY, binFrame )
     delInd = [];
     % Read First Image to determine metadata
     while ind <= numFiles && ~finished
-        if contains(files(ind).name, dataname) && files(ind).name(1) ~= '.'  % Checking for a proper file
+        if  files(ind).name(1) ~= '.'  % Checking for a proper file
             img = bfopen_im( fullfile(files(ind).folder,'/',files(ind).name) );
             [nr,nc] = size(imresize(img, binScale,'nearest'));            
             finished = true;
