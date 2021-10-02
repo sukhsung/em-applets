@@ -1,6 +1,15 @@
-function sliceZ(data)
+function sliceZ( varargin )
+     
 
-    [~,~,nz] = size(data);
+    if nargin == 1
+        data = varargin{1};   
+        [~,~,nz] = size(data);
+    elseif nargin ==2
+        data = varargin{1}(:,:, varargin{2});
+        [~,~,nz] = size(data);
+    end
+        
+    
 
     cmin = min(data(:));
     cmax = max(data(:));
