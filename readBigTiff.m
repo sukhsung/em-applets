@@ -25,8 +25,8 @@ function im_stack = readBigTiff(varargin)
     
     for indZ = 1:nz
         fprintf('%d / %d\n', indZ, nz);
-        im_stack(:,:,indZ) = tiffObj.read;
         tiffObj.setDirectory( zs(indZ))
+        im_stack(:,:,indZ) = tiffObj.read;
     end
     close(tiffObj)
 end
